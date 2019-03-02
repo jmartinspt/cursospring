@@ -5,7 +5,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pt.jmartinspt.cursospring.dao.CategoriaDao;
+import pt.jmartinspt.cursospring.dao.ProdutoDao;
 import pt.jmartinspt.cursospring.domain.Categoria;
+import pt.jmartinspt.cursospring.domain.Produto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +17,9 @@ public class CursospringApplication implements CommandLineRunner {
 
     @Autowired
     private CategoriaDao categoriaDao;
+
+    @Autowired
+    private ProdutoDao produtoDao;
 
     public static void main(String[] args) {
         SpringApplication.run(CursospringApplication.class, args);
@@ -28,7 +33,30 @@ public class CursospringApplication implements CommandLineRunner {
         Categoria cat3 = new Categoria(null, "Armazém");
         Categoria cat4 = new Categoria(null, "Cozinha");
 
+
+        Produto prod1 = new Produto(null,"Computador",1500.00);
+        Produto prod2 = new Produto(null,"Teclado",50.00);
+        Produto prod3 = new Produto(null,"Armário",800.00);
+        Produto prod4 = new Produto(null,"Microondas",200.00);
+        Produto prod5 = new Produto(null,"Torradeira",80.00);
+        Produto prod6 = new Produto(null,"Cadeira ergonómica",250.00);
+        Produto prod7 = new Produto(null,"Escadote",35.00);
+
+        cat1.getProdutos().addAll(Arrays.asList(prod1,prod2));
+        cat2.getProdutos().addAll((Arrays.asList(prod6)));
+        cat3.getProdutos().addAll(Arrays.asList(prod3,prod7));
+        cat4.getProdutos().addAll(Arrays.asList(prod4,prod5));
+
+        prod1.getCategorias().addAll(Arrays.asList(cat1));
+        prod2.getCategorias().addAll(Arrays.asList(cat1));
+        prod3.getCategorias().addAll(Arrays.asList(cat3));
+        prod4.getCategorias().addAll(Arrays.asList(cat4));
+        prod5.getCategorias().addAll(Arrays.asList(cat4));
+        prod6.getCategorias().addAll(Arrays.asList(cat2));
+        prod7.getCategorias().addAll(Arrays.asList(cat3));
+
         categoriaDao.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
+        produtoDao.saveAll(Arrays.asList(prod1,prod2,prod3,prod4,prod5,prod6,prod7));
 
     }
 }
