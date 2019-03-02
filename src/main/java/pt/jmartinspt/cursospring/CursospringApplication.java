@@ -4,14 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import pt.jmartinspt.cursospring.dao.CategoriaDao;
-import pt.jmartinspt.cursospring.dao.CidadeDao;
-import pt.jmartinspt.cursospring.dao.DistritoDao;
-import pt.jmartinspt.cursospring.dao.ProdutoDao;
-import pt.jmartinspt.cursospring.domain.Categoria;
-import pt.jmartinspt.cursospring.domain.Cidade;
-import pt.jmartinspt.cursospring.domain.Distrito;
-import pt.jmartinspt.cursospring.domain.Produto;
+import pt.jmartinspt.cursospring.dao.*;
+import pt.jmartinspt.cursospring.domain.*;
+import pt.jmartinspt.cursospring.domain.enums.TipoCliente;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +25,12 @@ public class CursospringApplication implements CommandLineRunner {
 
     @Autowired
     private DistritoDao distritoDao;
+
+    @Autowired
+    private ClienteDao clienteDao;
+
+    @Autowired
+    private EnderecoDao enderecoDao;
 
     public static void main(String[] args) {
         SpringApplication.run(CursospringApplication.class, args);
@@ -65,6 +66,17 @@ public class CursospringApplication implements CommandLineRunner {
         Cidade cid6 = new Cidade(null, "Fafe", dist3);
 
 
+        Cliente cli1 = new Cliente(null, "Joel Martins", "jmartins.com@gmail.com", 207199844, TipoCliente.PARTICULAR);
+        Cliente cli2 = new Cliente(null, "SPMS", "spms-general.min-saude.pt", 507886312, TipoCliente.EMPRESARIAL);
+
+
+        Endereco end1 = new Endereco(null, "Rua da Igreja","175",null,"4905-205", "Alvarães",cid1,cli1);
+        Endereco end2 = new Endereco(null, "Travessa da Carvalhosa","37/39","RC","4050-169", "Cedofeita",cid3,cli1);
+
+
+        Endereco end3 = new Endereco(null,"Rua do Breiner","124","RC","4050-121","Cedofeita",cid3,cli2);
+
+
         cat1.getProdutos().addAll(Arrays.asList(prod1,prod2));
         cat2.getProdutos().addAll((Arrays.asList(prod6)));
         cat3.getProdutos().addAll(Arrays.asList(prod3,prod7));
@@ -83,10 +95,20 @@ public class CursospringApplication implements CommandLineRunner {
         dist2.getCidades().addAll(Arrays.asList(cid3,cid4));
         dist3.getCidades().addAll(Arrays.asList(cid5,cid6));
 
+
+        cli1.getTelefones().addAll(Arrays.asList("962422378","258771254"));
+        cli2.getTelefones().addAll(Arrays.asList("93900123","250777644"));
+        cli1.getEnderecos().addAll(Arrays.asList(end1,end2));
+        cli2.getEnderecos().addAll(Arrays.asList(end3));
+
+
         categoriaDao.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
         produtoDao.saveAll(Arrays.asList(prod1,prod2,prod3,prod4,prod5,prod6,prod7));
         distritoDao.saveAll(Arrays.asList(dist1,dist2,dist3));
         cidadeDao.saveAll(Arrays.asList(cid1,cid2,cid3,cid4,cid5,cid6));
+        clienteDao.saveAll(Arrays.asList(cli1,cli2));
+        enderecoDao.saveAll(Arrays.asList(end1,end2,end3));
+
 
 
 
