@@ -1,5 +1,7 @@
 package pt.jmartinspt.cursospring.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class Distrito  implements Serializable {
     private Integer id;
     private String nome;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "distrito")
     private List<Cidade> cidades = new ArrayList();
 
