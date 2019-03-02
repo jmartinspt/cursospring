@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pt.jmartinspt.cursospring.dao.CategoriaDao;
 import pt.jmartinspt.cursospring.domain.Categoria;
+import pt.jmartinspt.cursospring.services.exceptions.ObjectNotFoundException;
 
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ public class CategoriaService {
 
         Optional<Categoria> obj = dao.findById(id);
 
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Objecto Não encontrado! ID =" + id + ", Tipo: " + Categoria.class.getName()) );
 
     }
 
